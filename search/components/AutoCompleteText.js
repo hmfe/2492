@@ -1,4 +1,38 @@
 import React from "react";
+import styled from "styled-components";
+
+const InputWrapper = styled.div`
+  margin: 0 auto;
+  width: 50%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 3vw;
+  @media (max-width: 950px) {
+    width: 70%;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  background-color: #aaa;
+  border: 1px solid #888;
+  font-size: 1vw;
+`;
+
+const SuggestionList = styled.ul`
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+`;
+
+const SuggenstionItem = styled.li`
+  width: 100%;
+  border: 1px solid #eee;
+  text-align: left;
+  cursor: pointer;
+  margin: 1% auto;
+  font-size: 1vw;
+`;
 
 class AutoCompleteText extends React.Component {
   constructor(props) {
@@ -22,11 +56,12 @@ class AutoCompleteText extends React.Component {
   }
 
   suggestionSelected(value) {
+    const newValue = value;
     this.setState(() => ({
-      text: value,
+      text: newValue,
       suggestions: []
     }));
-    this.props.updateSearch(value);
+    this.props.updateSearch(newValue);
   }
 
   renderSuggestions() {
@@ -35,13 +70,16 @@ class AutoCompleteText extends React.Component {
       return null;
     }
     return (
-      <ul>
+      <SuggestionList>
         {suggestions.map(item => (
-          <li key={item} onClick={() => this.suggestionSelected(item)}>
+          <SuggenstionItem
+            key={item}
+            onClick={() => this.suggestionSelected(item)}
+          >
             {item}
-          </li>
+          </SuggenstionItem>
         ))}
-      </ul>
+      </SuggestionList>
     );
   }
 
@@ -54,18 +92,26 @@ class AutoCompleteText extends React.Component {
   render() {
     const { text } = this.state;
     return (
-      <div>
-        <input
-          onChange={e => {
-            this.onTextChanged(e);
+      <InputWrapper>
+        <form
+          onSubmit={e => {
+            this.selectText.bind(e);
           }}
-          placeholder="search"
-          type="text"
-          value={text}
-          onClick={this.removeText.bind(this)}
-        />
-        {this.renderSuggestions()}
-      </div>
+        >
+          Search for a country:
+          <SearchInput
+            onChange={e => {
+              this.onTextChanged(e);
+            }}
+            ref={input => (this.newValue = input)}
+            placeholder="search"
+            type="text"
+            value={text}
+            onClick={this.removeText.bind(this)}
+          />
+          {this.renderSuggestions()}
+        </form>
+      </InputWrapper>
     );
   }
 }
