@@ -1,0 +1,33 @@
+.delete {
+  width: 150px;
+  height: 75px;
+  background-color: rgb(231, 165, 92);
+  border: 2px solid rgb(135, 134, 133);
+  text-align: left;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+}
+
+.delete .circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(-25%, 25%);
+  text-align: center;
+}
+
+.delete .circle .cross {
+  font-size: 30px;
+  color: #000;
+  font-weight: bold;
+  font-family: helvetica, arial;
+  line-height: 1;
+  position: absolute;
+  transform: translate(-50%, 30%);
+}
